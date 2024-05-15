@@ -1,0 +1,19 @@
+.divSearch {
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-top: 10px;
+    width: 50%;
+}
+
+.inputSearch {
+    border: none;
+    width: 90%;
+    outline: none;
+}
+
+.searchIco {
+    margin-left: 10px;
+}

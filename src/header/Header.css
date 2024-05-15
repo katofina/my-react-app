@@ -1,0 +1,22 @@
+.headDiv {
+    height: 80px;
+    width: 100%;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.label {
+    font-size: 50px;
+}
+
+.aSign {
+    border: 1px solid black;
+    margin-right: 10px;
+    display: inline-block;
+    height: 25px;
+    width: 70px;
+    text-align: center;
+}
