@@ -10,17 +10,12 @@ function ApiTest() {
     const fetchData = async (url) => {
         const response = await fetch(url);
 
-        if(!response.ok) {
-            throw new Error(`Error: ${response.status}`);
-        }
-
         const result = await response.json();
         setData(result);
     };
 
     useEffect(() => {
         fetchData('https://fakestoreapi.com/products/');
-        console.log('useeffect');
     }, []); //сработает только один раз при самом рендеринге
 
     return (

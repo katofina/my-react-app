@@ -1,17 +1,24 @@
-import ApiTest from './API/ApiTest';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from './header/Header.jsx';
+import Footer from "./Footer/Footer.jsx";
+import SignIn from "./Sign/SignIn.jsx";
+import ApiTest from "./API/ApiTest.jsx";
 import './App.css';
-import Footer from './Footer/Footer';
-import Header from './header/Header';
+import SignUp from "./Sign/SignUp.jsx";
 
 function App() {
   return (
+    <BrowserRouter>
     <div className='wrapper'>
-      <header><Header/></header>
-      <main>
-        <ApiTest/>
-      </main>
-      <footer><Footer/></footer>
-    </div>
+            <header><Header/></header>
+            <main>
+            <Routes>
+              <Route path="/" element={<ApiTest />}/>
+            </Routes>
+            </main>
+            <footer><Footer/></footer>
+        </div>
+    </BrowserRouter>
   );
 }
 
