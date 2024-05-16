@@ -1,0 +1,21 @@
+.main {
+    margin-top: 10px;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../background/background.jpg');
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+    color: white;
+}
+
+.pMain {
+    font-size: 60px;
+    margin-right: 50px;
+}
+
+.pSecond {
+    font-size: 30px;
+    margin-right: 50px;
+}

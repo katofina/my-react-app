@@ -4,7 +4,6 @@ import Footer from "./Footer/Footer.jsx";
 import SignIn from "./Sign/SignIn.jsx";
 import ApiTest from "./API/ApiTest.jsx";
 import './App.css';
-import SignUp from "./Sign/SignUp.jsx";
 
 function App() {
   return (
