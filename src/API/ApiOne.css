@@ -1,0 +1,32 @@
+.oneDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: antiquewhite;
+    height: auto;
+    width: auto;
+    border-radius: 20px;
+}
+
+.photoOne {
+    height: 250px;
+    width: 250px;
+    border: 1px solid black;
+    margin: 20px;
+    border-radius: 20px;
+}
+
+.textDiv {
+    width: 450px;
+}
+
+.pTitle {
+    font-size: 30px;
+}
+
+.pDesc {
+    font-size: 15px;
+    width: 400px;
+    text-align: justify;
+}

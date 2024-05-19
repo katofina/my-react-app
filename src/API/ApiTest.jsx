@@ -1,26 +1,29 @@
-import React from "react";
-import { useState } from "react";
 import { useEffect } from "react";
 import './ApiTest.css';
-import Search from "./Search/Search";
+import { connect } from "react-redux";
+import {setData} from '../reducers/DataAction';
 
-function ApiTest() {
-    const [data, setData] = useState([]);
-
+function ApiTest(props) {
     const fetchData = async (url) => {
         const response = await fetch(url);
 
         const result = await response.json();
-        setData(result);
+        props.setData(result);
     };
 
     useEffect(() => {
         fetchData('https://fakestoreapi.com/products/');
     }, []); //сработает только один раз при самом рендеринге
-
-    return (
-        <Search data={data}/>
-    )
 }
 
-export default ApiTest;
+const mapStateToProps = store => {
+    return {}
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setData: cards => dispatch(setData(cards))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ApiTest);

@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from './header/Header.jsx';
 import Footer from "./Footer/Footer.jsx";
-import SignIn from "./Sign/SignIn.jsx";
-import ApiTest from "./API/ApiTest.jsx";
 import './App.css';
+import Search from "./API/Search/Search.jsx";
 
 function App() {
   return (
@@ -12,7 +11,9 @@ function App() {
             <header><Header/></header>
             <main>
             <Routes>
-              <Route path="/" element={<ApiTest />}/>
+              <Route path="/" element={<Search/>}/>
+              <Route path="/history"/>
+              <Route path="/favourite"/>
             </Routes>
             </main>
             <footer><Footer/></footer>
