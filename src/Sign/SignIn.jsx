@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {setAuth} from '../reducers/AuthAction';
 import { setModalIn } from '../reducers/ModalAction';
 
-function SignIn(props) {
+function SignIn() {
     const [state, setState] = useState({pUser:true, pPass:true});
 
     const userRef = useRef();
@@ -12,13 +12,16 @@ function SignIn(props) {
 
     function checkValid(event) {
         event.preventDefault();
-        const checkUser = props.store.find((item) => item.nick === userRef.current.value);
-        if (checkUser) {
-            if(checkUser.pass === passRef.current.value) {
-            props.setAuth([true, checkUser['name']]);
-            props.setModalIn(false);
+        const checkLocal = localStorage.getItem("users").split(";");
+        checkLocal.pop();
+        console.log(checkLocal);
+        const checkEmail = checkLocal.map((item) => JSON.parse(item)).find((item) => item.nick === userRef.current.value);
+        console.log(checkEmail);
+        if (checkEmail) {
+            if (checkEmail.pass === passRef.current.value) {
+                localStorage.setItem("authUser", JSON.stringify({name: checkEmail.name, auth: true}));
                 setState({pUser: true, pPass: true});
-        }
+                window.location = '/';}
             else setState({pUser: true, pPass: false});
         } else setState({pUser: false, pPass: true});
     };
@@ -43,17 +46,4 @@ function SignIn(props) {
     )
 }
 
-const mapStateToProps = store => {
-    return {
-        store: store.users,
-    }
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        setAuth: auth => dispatch(setAuth(auth)),
-        setModalIn: modal => dispatch(setModalIn(modal))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default SignIn;

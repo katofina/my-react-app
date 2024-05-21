@@ -12,7 +12,7 @@ function Search(props) {
 
     function searchRes(event) {
         if (event.key === 'Enter') {
-            const resInput = props.store.data.cards.filter((item) => 
+            const resInput = props.store.filter((item) => 
             item.title.toLowerCase().includes(event.target.value));
             setResults(resInput);
         }
@@ -27,7 +27,7 @@ function Search(props) {
         {(results === "main") ? (
             <Main/>
         ) : (results.length) ? (
-            <ApiEvery data={results} store={props}/>
+            <ApiEvery data={results} auth={props.auth}/>
         ) : (
             <NoFound/>
         )}
@@ -38,7 +38,8 @@ function Search(props) {
 
 const mapStateToProps = store => {
     return {
-        store: store,
+        store: store.data.cards,
+        auth: store.auth
     }
 }
 

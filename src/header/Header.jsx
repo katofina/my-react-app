@@ -5,20 +5,29 @@ import SignUp from '../Sign/SignUp';
 import { connect } from 'react-redux';
 import {setModalIn} from '../reducers/ModalAction';
 import { setModalUp } from '../reducers/ModalUpAction';
-import { setAuth } from '../reducers/AuthAction';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 function Header(props) {
+    const [auth, setAuth] = useState({auth: false, name: ""});
+
+    useEffect(() => {
+        const checkLocal = JSON.parse(localStorage.getItem("authUser"));
+        if(checkLocal.auth === true) setAuth({auth: checkLocal.auth, name: checkLocal.name});
+        console.log(auth, checkLocal);
+    }, []);
+
     return (
         <div className="headDiv">
             <a className='label' href="/">Shop.JS</a>
-            {props.auth[0] ? (
+            {auth ? (
                 <>
                 <div className='row'>
-                    <p className='hello'>Hello, {props.auth[1]}</p>
+                    <p className='hello'>Hello, {auth.name}</p>
                     <button className='buttonSign'>History</button>
                     <button className='buttonSign'>Favourite</button>
-                    <button className='buttonSign' onClick={() => props.setAuth([false, ''])}>Exit</button>
+                    <button className='buttonSign' onClick={() => {setAuth(false); localStorage.setItem("authUser", JSON.stringify({name: "", auth: false}))}}>Exit</button>
                 </div>
                 </>
             ) : (
@@ -36,7 +45,6 @@ function Header(props) {
 const mapStateToProps = store => {
     return {
         modal: store.modal,
-        auth: store.auth,
     }
 }
 
@@ -44,7 +52,6 @@ const mapDispatchToProps = dispatch => {
     return {
         setModalIn: modal => dispatch(setModalIn(modal)),
         setModalUp: modal => dispatch(setModalUp(modal)),
-        setAuth: auth => dispatch(setAuth(auth))
     }
 }
 

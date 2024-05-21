@@ -1,10 +1,6 @@
 import { useRef, useState } from "react";
-import { connect } from "react-redux";
-import {addUser} from '../reducers/UserAction';
-import {setModalUp} from '../reducers/ModalUpAction';
-import { setAuth } from "../reducers/AuthAction";
 
-function SignUp(props) {
+function SignUp() {
     const [state, setState] = useState({nameBool:true, passBool:true, userBool:true, checkSame: false});
 
     const userRef = useRef();
@@ -19,13 +15,14 @@ function SignUp(props) {
         const nameBool = (/^[a-zA-Z'-]+$/).test(name);
         const passBool = (/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,16}$/).test(pass);
         const userBool = (/^[^0-9]\w+$/).test(nick);
-        const checkSame = props.store.some((item) => item.nick === userRef.current.value);
-        console.log(props);
+        const users = localStorage.getItem("users");
+        const checkSame = users.includes(nick);
         setState({nameBool, passBool, userBool, checkSame});
         if (nameBool && passBool && userBool && (!checkSame)) {
-            props.addUser({name, nick, pass});
-            props.setModalUp(false);
-            props.setAuth([true, name]);
+            const usersString = users + JSON.stringify({name: name, nick: nick, pass: pass}) + ";";
+            localStorage.setItem("users", usersString);
+            localStorage.setItem("authUser", JSON.stringify({name: name, auth: true}));
+            window.location = '/';
         };
     };
 
@@ -54,18 +51,4 @@ function SignUp(props) {
     )
 };
 
-const mapStateToProps = store => {
-    return {
-        store: store.users,
-    }
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addUser: user => dispatch(addUser(user)),
-        setModalUp: modal => dispatch(setModalUp(modal)),
-        setAuth: auth => dispatch(setAuth(auth))
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default SignUp;

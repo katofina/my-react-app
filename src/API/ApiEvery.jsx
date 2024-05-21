@@ -7,9 +7,13 @@ import Modal from "../Sign/Modal";
 function ApiEvery(props) {
     const [active, setActive] = useState(false);
     const [one, setOne] = useState({});
+    console.log(props);
 
     function checkLogin() {
-        props.setModalIn(true);
+        if (props.auth[0] === false) {props.setModalIn(true);}
+        else {
+            
+        }
     }
 
     return (<div>
