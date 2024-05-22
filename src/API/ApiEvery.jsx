@@ -1,15 +1,28 @@
 import { useSelector } from "react-redux";
 import { setModalIn } from "../reducers/ModalAction";
 import ApiOne from './ApiOne';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../Sign/Modal";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ApiEvery() {
+    const firstCounter = useSelector((store) => store.data.cards);
     const [active, setActive] = useState(false);
     const [one, setOne] = useState({});
-    const store = useSelector((store) => store.res.res);
+    const [resMap, setResMap] = useState([]);
     const dispatch = useDispatch();
+    const {res} = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() =>{
+        console.log(res);
+        const resInput = firstCounter.filter((item) => 
+            item.title.toLowerCase().includes(res));
+            if(resInput == false) {navigate("/nofound");}
+        setResMap(resInput);
+    }, [res])
 
     function checkLogin(add) {
         const checkAuth = JSON.parse(localStorage.getItem("authUser"));;
@@ -28,7 +41,7 @@ function ApiEvery() {
 
         return (<div>
             <ul>
-            {store.map((item) => (
+            {resMap.map((item) => (
                 <div className="cardDiv" key={item.id}>
                     <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {setOne(item); setActive(true)}}/>
                     <div>

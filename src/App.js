@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Layout/>}>
           <Route path="" element={<Search/>}>
             <Route index element={<Main/>}/>
-            <Route path="search" element={<ApiEvery/>}/>
+            <Route path="search/:res" element={<ApiEvery/>}/>
             <Route path="nofound" element={<NoFound/>}/>
           </Route>
           <Route path="history" element={<History/>}/>
