@@ -11,19 +11,18 @@ function ApiEvery() {
     const store = useSelector((store) => store.res.res);
     const dispatch = useDispatch();
 
-    function checkLogin() {
-        const checkAuth = JSON.parse(localStorage.getItem("authUser"));  console.log(checkAuth);
+    function checkLogin(add) {
+        const checkAuth = JSON.parse(localStorage.getItem("authUser"));;
         if(checkAuth.auth === false) {dispatch(setModalIn(true));}
         else {
             let favourite = localStorage.getItem(checkAuth.nick);
-            if(favourite) {
-                console.log(favourite);
-                favourite = JSON.parse(favourite);
-                const checkOne = favourite.some((item) => item.id === one.id);
-                if(checkOne === false) favourite = favourite.concat(one);
-            } else favourite = [one];
-            localStorage.setItem(checkAuth.nick, JSON.stringify(favourite));
             console.log(favourite);
+            if(favourite) {
+                favourite = JSON.parse(favourite);
+                const checkOne = favourite.some((item) => item.id === add.id);
+                if(checkOne === false) favourite = favourite.concat(add);
+            } else {favourite = [add];};
+            localStorage.setItem(checkAuth.nick, JSON.stringify(favourite));
         }
     }
 
@@ -31,7 +30,7 @@ function ApiEvery() {
             <ul>
             {store.map((item) => (
                 <div className="cardDiv" key={item.id}>
-                    <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {setActive(true)}}/>
+                    <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {setOne(item); setActive(true)}}/>
                     <div>
                         <p>{item.title}</p>
                         <p className="description">{item.description}</p>
@@ -40,8 +39,8 @@ function ApiEvery() {
                                 <p className="priceP">Price</p>
                                 <p className="priceP">{'$' + item.price}</p>
                             </div>
-                            <div onClick={() => setOne(item)}>
-                                <button onClick={checkLogin}>Add to Favourite</button>
+                            <div>
+                                <button onClick={() => {checkLogin(item);}}>Add to Favourite</button>
                             </div>
                         </div>
                     </div>

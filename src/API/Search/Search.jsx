@@ -14,7 +14,6 @@ function Search() {
         if(event.key === "Enter") {
             const resInput = firstCounter.filter((item) => 
             item.title.toLowerCase().includes(event.target.value));
-            console.log(resInput);
             dispatch(setResults(resInput));
             if(resInput == false) {navigate("/nofound")}
             else {navigate("/search")}
