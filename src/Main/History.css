@@ -1,0 +1,19 @@
+.divHist {
+    height: 30px;
+    width: 100vh;
+    margin-bottom: 10px;
+}
+
+.divHist_p {
+    height: inherit;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: antiquewhite;
+    cursor: pointer;
+}
+
+.pHist {
+    font-size: 20px;
+    margin-left: 20px;
+}

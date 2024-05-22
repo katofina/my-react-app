@@ -7,10 +7,11 @@ import {setModalIn} from '../reducers/ModalAction';
 import { setModalUp } from '../reducers/ModalUpAction';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header(props) {
     const [auth, setAuth] = useState({auth: false, name: ""});
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkLocal = JSON.parse(localStorage.getItem("authUser"));
@@ -27,7 +28,11 @@ function Header(props) {
                     <p className='hello'>Hello, {auth.name}</p>
                     <Link to="/history" className='buttonSign'>History</Link>
                     <Link to="/favourite" className='buttonSign'>Favourite</Link>
-                    <button className='buttonSign' onClick={() => {setAuth(false); localStorage.setItem("authUser", JSON.stringify({name: "", auth: false}))}}>Exit</button>
+                    <button className='buttonSign' onClick={() => {
+                        setAuth(false); localStorage.setItem("authUser", JSON.stringify({name: "", auth: false}));
+                        navigate('/')}}>
+                        Exit
+                    </button>
                 </div>
                 </>
             ) : (

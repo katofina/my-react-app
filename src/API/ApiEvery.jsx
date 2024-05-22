@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function ApiEvery() {
-    const firstCounter = useSelector((store) => store.data.cards);
+    const store = useSelector((store) => store.data.cards);
     const [active, setActive] = useState(false);
     const [one, setOne] = useState({});
     const [resMap, setResMap] = useState([]);
@@ -17,21 +17,31 @@ function ApiEvery() {
     const navigate = useNavigate();
 
     useEffect(() =>{
-        console.log(res);
-        const resInput = firstCounter.filter((item) => 
+        const resInput = store.filter((item) => 
             item.title.toLowerCase().includes(res));
             if(resInput == false) {navigate("/nofound");}
         setResMap(resInput);
+        const nick = JSON.parse(localStorage.getItem("authUser")).nick + "_hist";
+        let hist = localStorage.getItem(nick);
+        if(hist) {
+            hist = JSON.parse(hist);
+            if(!hist.includes(res)) {hist.push(res)};
+            localStorage.setItem(nick, JSON.stringify(hist));
+        } else {
+            localStorage.setItem(nick, JSON.stringify([res]));
+        }
     }, [res])
 
     function checkLogin(add) {
         const checkAuth = JSON.parse(localStorage.getItem("authUser"));;
+        console.log(checkAuth);
         if(checkAuth.auth === false) {dispatch(setModalIn(true));}
         else {
             let favourite = localStorage.getItem(checkAuth.nick);
             console.log(favourite);
             if(favourite) {
                 favourite = JSON.parse(favourite);
+                console.log(favourite);
                 const checkOne = favourite.some((item) => item.id === add.id);
                 if(checkOne === false) favourite = favourite.concat(add);
             } else {favourite = [add];};

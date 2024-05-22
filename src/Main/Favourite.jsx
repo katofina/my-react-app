@@ -16,7 +16,7 @@ function Favourite() {
         setNick(checkAuth.nick);
         if(checkAuth.auth === true) {
             const fav = JSON.parse(localStorage.getItem(checkAuth.nick));
-            setFavorite(fav);
+            if(fav) setFavorite(fav);
             console.log(favourite);
         } else navigate("/");
     }, [reload]);
@@ -28,30 +28,36 @@ function Favourite() {
         setReload(!reload);
     };
     
-    return(
-        <div>
-            <ul>
-            {favourite.map((item) => (
-                <div className="cardDiv" key={item.id}>
-                    <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {setOne(item); setActive(true)}}/>
-                    <div>
-                        <p>{item.title}</p>
-                        <p className="description">{item.description}</p>
-                        <div className="divBottom">
-                            <div>
-                                <p className="priceP">Price</p>
-                                <p className="priceP">{'$' + item.price}</p>
-                            </div>
-                            <div>
-                                <button onClick={() => {removeOne(item)}}>Remove</button>
+    if(favourite.length) {
+        return(
+            <div>
+                <ul>
+                {favourite.map((item) => (
+                    <div className="cardDiv" key={item.id}>
+                        <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {setOne(item); setActive(true)}}/>
+                        <div>
+                            <p>{item.title}</p>
+                            <p className="description">{item.description}</p>
+                            <div className="divBottom">
+                                <div>
+                                    <p className="priceP">Price</p>
+                                    <p className="priceP">{'$' + item.price}</p>
+                                </div>
+                                <div>
+                                    <button onClick={() => {removeOne(item)}}>Remove</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            ))}
-        </ul>
-        <Modal active={active} setActive={setActive}><ApiOne item={one}/></Modal>
-    </div>);
+                ))}
+            </ul>
+            <Modal active={active} setActive={setActive}><ApiOne item={one}/></Modal>
+        </div>)
+    } else {
+        return (
+            <p>You haven't added anything to favourite.</p>
+        )
+    }
 }
 
 export default Favourite;
