@@ -21,7 +21,7 @@ function SignUp() {
         if (nameBool && passBool && userBool && (!checkSame)) {
             const usersString = users + JSON.stringify({name: name, nick: nick, pass: pass}) + ";";
             localStorage.setItem("users", usersString);
-            localStorage.setItem("authUser", JSON.stringify({name: name, auth: true}));
+            localStorage.setItem("authUser", JSON.stringify({name: name, auth: true, nick: nick}));
             window.location = '/';
         };
     };

@@ -1,8 +1,5 @@
 import { useRef, useState } from 'react';
 import './Sign.css';
-import { connect } from 'react-redux';
-import {setAuth} from '../reducers/AuthAction';
-import { setModalIn } from '../reducers/ModalAction';
 
 function SignIn() {
     const [state, setState] = useState({pUser:true, pPass:true});
@@ -19,7 +16,7 @@ function SignIn() {
         console.log(checkEmail);
         if (checkEmail) {
             if (checkEmail.pass === passRef.current.value) {
-                localStorage.setItem("authUser", JSON.stringify({name: checkEmail.name, auth: true}));
+                localStorage.setItem("authUser", JSON.stringify({name: checkEmail.name, auth: true, nick: checkEmail.nick}));
                 setState({pUser: true, pPass: true});
                 window.location = '/';}
             else setState({pUser: true, pPass: false});

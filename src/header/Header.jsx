@@ -7,26 +7,26 @@ import {setModalIn} from '../reducers/ModalAction';
 import { setModalUp } from '../reducers/ModalUpAction';
 import { useState } from 'react';
 import { useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 
 function Header(props) {
     const [auth, setAuth] = useState({auth: false, name: ""});
 
     useEffect(() => {
         const checkLocal = JSON.parse(localStorage.getItem("authUser"));
-        if(checkLocal.auth === true) setAuth({auth: checkLocal.auth, name: checkLocal.name});
-        console.log(auth, checkLocal);
+        if(checkLocal.auth === true) {setAuth({auth: checkLocal.auth, name: checkLocal.name});}
+        console.log(auth);
     }, []);
 
     return (
         <div className="headDiv">
-            <a className='label' href="/">Shop.JS</a>
-            {auth ? (
+            <Link to="/" className='label'>Shop.JS</Link>
+            {auth.auth ? (
                 <>
                 <div className='row'>
                     <p className='hello'>Hello, {auth.name}</p>
-                    <button className='buttonSign'>History</button>
-                    <button className='buttonSign'>Favourite</button>
+                    <Link to="/history" className='buttonSign'>History</Link>
+                    <Link to="/favourite" className='buttonSign'>Favourite</Link>
                     <button className='buttonSign' onClick={() => {setAuth(false); localStorage.setItem("authUser", JSON.stringify({name: "", auth: false}))}}>Exit</button>
                 </div>
                 </>

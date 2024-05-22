@@ -1,20 +1,23 @@
-import { useState } from "react";
 import '../Search/Search.css';
 import searchIcon from '../../icon/searchIcon.svg'
-import ApiEvery from "../ApiEvery";
-import NoFound from "./NoFound";
-import Main from "../../Main/Main";
 import ApiTest from "../ApiTest";
-import { connect } from "react-redux";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {setResults} from '../../reducers/ResultsAction';
 
-function Search(props) {
-    const [results, setResults] = useState("main");
+function Search() {
+    const firstCounter = useSelector((store) => store.data.cards);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     function searchRes(event) {
-        if (event.key === 'Enter') {
-            const resInput = props.store.filter((item) => 
+        if(event.key === "Enter") {
+            const resInput = firstCounter.filter((item) => 
             item.title.toLowerCase().includes(event.target.value));
-            setResults(resInput);
+            console.log(resInput);
+            dispatch(setResults(resInput));
+            if(resInput == false) {navigate("/nofound")}
+            else {navigate("/search")}
         }
     };
 
@@ -22,25 +25,12 @@ function Search(props) {
         <>
         <div className="divSearch">
             <img src={searchIcon} alt="Search" className="searchIco"/>
-            <input type="text" placeholder="Enter for search..." className="inputSearch" onKeyDown={searchRes}/>
+                <input type="text" placeholder="Enter for search..." className="inputSearch" onKeyDown={searchRes}/>
         </div>
-        {(results === "main") ? (
-            <Main/>
-        ) : (results.length) ? (
-            <ApiEvery data={results} auth={props.auth}/>
-        ) : (
-            <NoFound/>
-        )}
+        <Outlet/>
         <ApiTest/>
         </>
     )
 }
 
-const mapStateToProps = store => {
-    return {
-        store: store.data.cards,
-        auth: store.auth
-    }
-}
-
-export default connect(mapStateToProps)(Search);
+export default Search;

@@ -1,24 +1,28 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from './header/Header.jsx';
-import Footer from "./Footer/Footer.jsx";
+import { Routes, Route } from "react-router-dom";
 import './App.css';
-import Search from "./API/Search/Search.jsx";
+import History from './Main/History.jsx';
+import Favourite from "./Main/Favourite.jsx";
+import Search from './API/Search/Search.jsx';
+import {Layout} from './Layout.jsx';
+import Main from "./Main/Main";
+import ApiEvery from "./API/ApiEvery";
+import NoFound from "./API/Search/NoFound";
 
 function App() {
   return (
-    <BrowserRouter>
-    <div className='wrapper'>
-            <header><Header/></header>
-            <main>
-            <Routes>
-              <Route path="/" element={<Search/>}/>
-              <Route path="/history"/>
-              <Route path="/favourite"/>
-            </Routes>
-            </main>
-            <footer><Footer/></footer>
-        </div>
-    </BrowserRouter>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+          <Route path="" element={<Search/>}>
+            <Route index element={<Main/>}/>
+            <Route path="search" element={<ApiEvery/>}/>
+            <Route path="nofound" element={<NoFound/>}/>
+          </Route>
+          <Route path="history" element={<History/>}/>
+          <Route path="favourite" element={<Favourite/>}/>
+        </Route>
+      </Routes>
+    </>
   );
 }
 

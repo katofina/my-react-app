@@ -10,8 +10,12 @@
 
 .inputSearch {
     border: none;
-    width: 90%;
+    width: 100%;
     outline: none;
+}
+
+.widthForm {
+    width: 90%;
 }
 
 .searchIco {

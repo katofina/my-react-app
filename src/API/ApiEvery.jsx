@@ -1,26 +1,37 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { setModalIn } from "../reducers/ModalAction";
 import ApiOne from './ApiOne';
 import { useState } from "react";
 import Modal from "../Sign/Modal";
+import { useDispatch } from "react-redux";
 
-function ApiEvery(props) {
+function ApiEvery() {
     const [active, setActive] = useState(false);
     const [one, setOne] = useState({});
-    console.log(props);
+    const store = useSelector((store) => store.res.res);
+    const dispatch = useDispatch();
 
     function checkLogin() {
-        if (props.auth[0] === false) {props.setModalIn(true);}
+        const checkAuth = JSON.parse(localStorage.getItem("authUser"));  console.log(checkAuth);
+        if(checkAuth.auth === false) {dispatch(setModalIn(true));}
         else {
-            
+            let favourite = localStorage.getItem(checkAuth.nick);
+            if(favourite) {
+                console.log(favourite);
+                favourite = JSON.parse(favourite);
+                const checkOne = favourite.some((item) => item.id === one.id);
+                if(checkOne === false) favourite = favourite.concat(one);
+            } else favourite = [one];
+            localStorage.setItem(checkAuth.nick, JSON.stringify(favourite));
+            console.log(favourite);
         }
     }
 
-    return (<div>
+        return (<div>
             <ul>
-            {props.data.map((item) => (
+            {store.map((item) => (
                 <div className="cardDiv" key={item.id}>
-                    <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {setActive(true); setOne(item)}}/>
+                    <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {setActive(true)}}/>
                     <div>
                         <p>{item.title}</p>
                         <p className="description">{item.description}</p>
@@ -29,7 +40,7 @@ function ApiEvery(props) {
                                 <p className="priceP">Price</p>
                                 <p className="priceP">{'$' + item.price}</p>
                             </div>
-                            <div>
+                            <div onClick={() => setOne(item)}>
                                 <button onClick={checkLogin}>Add to Favourite</button>
                             </div>
                         </div>
@@ -41,14 +52,4 @@ function ApiEvery(props) {
     </div>)
 }
 
-const mapStateToProps = store => {
-    return {}
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        setModalIn: modal => dispatch(setModalIn(modal))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ApiEvery);
+export default ApiEvery;

@@ -1,13 +1,11 @@
 import { combineReducers } from "redux";
 import { DataReducer } from "./DataReducer";
 import {ModalReducer} from './ModalReducer';
-import {UsersReducer} from './UsersReducer';
-import {AuthReducer} from './AuthReducer';
+import {ResultsReducer} from './ResultsReducer';
 
 export const rootReducer = combineReducers({
     data: DataReducer,
     modal: ModalReducer,
-    users: UsersReducer,
-    auth: AuthReducer,
+    res: ResultsReducer,
 })
 
