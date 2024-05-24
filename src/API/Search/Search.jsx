@@ -1,5 +1,4 @@
 import '../Search/Search.css';
-import searchIcon from '../../icon/searchIcon.svg'
 import ApiTest from "../ApiTest";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -15,7 +14,7 @@ function Search() {
     return(
         <>
         <div className="divSearch">
-            <img src={searchIcon} alt="Search" className="searchIco"/>
+            <img src="/icons/searchIcon.svg" alt="Search" className="searchIco"/>
                 <input type="text" placeholder="Enter for search..." className="inputSearch" onKeyDown={searchRes}/>
         </div>
         <Outlet/>
