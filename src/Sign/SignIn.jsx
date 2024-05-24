@@ -11,9 +11,7 @@ function SignIn() {
         event.preventDefault();
         const checkLocal = localStorage.getItem("users").split(";");
         checkLocal.pop();
-        console.log(checkLocal);
         const checkEmail = checkLocal.map((item) => JSON.parse(item)).find((item) => item.nick === userRef.current.value);
-        console.log(checkEmail);
         if (checkEmail) {
             if (checkEmail.pass === passRef.current.value) {
                 localStorage.setItem("authUser", JSON.stringify({name: checkEmail.name, auth: true, nick: checkEmail.nick}));
