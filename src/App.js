@@ -7,6 +7,7 @@ import {Layout} from './Layout.jsx';
 import Main from "./Main/Main";
 import ApiEvery from "./API/ApiEvery";
 import NoFound from "./API/Search/NoFound";
+import ApiOne from "./API/ApiOne";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           </Route>
           <Route path="history" element={<History/>}/>
           <Route path="favourite" element={<Favourite/>}/>
+          <Route path="product/:id" element={<ApiOne/>}/>
         </Route>
       </Routes>
     </>

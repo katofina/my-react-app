@@ -1,8 +1,11 @@
 import './Modal.css';
+import { useDispatch } from 'react-redux';
+import { closeModal } from '../reducers/CloseModalAction';
 
-function Modal({active, setActive, children}) {
+function Modal({active, children}) {
+    const dispatch = useDispatch();
 
-    return <div className={active ? "modal active" : "modal"} onClick={() => setActive(false)}>
+    return <div className={active ? "modal active" : "modal"} onClick={() => dispatch(closeModal(false))}>
         <div className='inModal' onClick={e => e.stopPropagation()}>
             {children}
         </div>

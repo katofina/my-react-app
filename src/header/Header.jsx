@@ -2,22 +2,24 @@ import './Header.css';
 import Modal from '../Sign/Modal';
 import SignIn from '../Sign/SignIn';
 import SignUp from '../Sign/SignUp';
-import { connect } from 'react-redux';
-import {setModalIn} from '../reducers/ModalAction';
-import { setModalUp } from '../reducers/ModalUpAction';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {setModalIn} from '../reducers/ModalAction';
+import {setModalUp} from '../reducers/ModalUpAction';
 
-function Header(props) {
+function Header() {
     const [auth, setAuth] = useState({auth: false, name: ""});
     const navigate = useNavigate();
+    const modal = useSelector((store) => store.modal);
+    const dispatch = useDispatch();
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         const checkLocal = JSON.parse(localStorage.getItem("authUser"));
         if(checkLocal.auth === true) {setAuth({auth: checkLocal.auth, name: checkLocal.name});}
-        console.log(auth);
-    }, []);
+    }, [reload]);
 
     return (
         <div className="headDiv">
@@ -31,33 +33,20 @@ function Header(props) {
                     <button className='buttonSign' onClick={() => {
                         setAuth(false); localStorage.setItem("authUser", JSON.stringify({name: "", auth: false}));
                         navigate('/')}}>
-                        Exit
+                        Log Out
                     </button>
                 </div>
                 </>
             ) : (
                 <div>
-                    <button className='buttonSign' onClick={() => props.setModalIn(true)}>Sign In</button>
-                    <button className='buttonSign' onClick={() => props.setModalUp(true)}>Sign Up</button>
+                    <button className='buttonSign' onClick={() => dispatch(setModalIn(true))}>Sign In</button>
+                    <button className='buttonSign' onClick={() => dispatch(setModalUp(true))}>Sign Up</button>
                 </div>
             )}
-            <Modal active={props.modal.modalIn} setActive={props.setModalIn}><SignIn/></Modal>
-            <Modal active={props.modal.modalUp} setActive={props.setModalUp}><SignUp/></Modal>
+            <Modal active={modal.modalIn}><SignIn reload={reload} setReload={setReload}/></Modal>
+            <Modal active={modal.modalUp}><SignUp reload={reload} setReload={setReload}/></Modal>
         </div>
     )
 }
 
-const mapStateToProps = store => {
-    return {
-        modal: store.modal,
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        setModalIn: modal => dispatch(setModalIn(modal)),
-        setModalUp: modal => dispatch(setModalUp(modal)),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

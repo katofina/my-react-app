@@ -1,17 +1,14 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setModalIn } from "../reducers/ModalAction";
-import ApiOne from './ApiOne';
-import Modal from "../Sign/Modal";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Every(props) {
-    const [one, setOne] = useState({});
     const [auth, setAuth] = useState({});
-    const [active, setActive] = useState(false);
     const [reload, setReload] = useState(false);
     const dispatch = useDispatch();
     const {res} = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuth = JSON.parse(localStorage.getItem("authUser"));
@@ -43,7 +40,7 @@ function Every(props) {
         <ul>
         {props.arr.map((item) => (
             <div className="cardDiv" key={item.id}>
-                <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {setOne(item); setActive(true)}}/>
+                <img src={item.image} className="itemPhoto" alt="thing" onClick={() => {navigate("/product/" + item.id)}}/>
                 <div>
                     <p>{item.title}</p>
                     <p className="description">{item.description}</p>
@@ -63,7 +60,6 @@ function Every(props) {
             </div>
         ))}
         </ul>
-        <Modal active={active} setActive={setActive}><ApiOne item={one}/></Modal>
     </div>)
 }
 

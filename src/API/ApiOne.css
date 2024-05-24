@@ -1,3 +1,10 @@
+.sectionOne {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .oneDiv {
     display: flex;
     flex-direction: row;
@@ -6,6 +13,7 @@
     background-color: antiquewhite;
     height: auto;
     width: auto;
+    border: 1px solid black;
     border-radius: 20px;
 }
 

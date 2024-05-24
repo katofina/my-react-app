@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react';
 import './Sign.css';
+import { useDispatch } from 'react-redux';
+import { closeModal } from '../reducers/CloseModalAction';
 
-function SignIn() {
+function SignIn({reload, setReload}) {
     const [state, setState] = useState({pUser:true, pPass:true});
+    const dispatch = useDispatch();
 
     const userRef = useRef();
     const passRef = useRef();
@@ -16,7 +19,8 @@ function SignIn() {
             if (checkEmail.pass === passRef.current.value) {
                 localStorage.setItem("authUser", JSON.stringify({name: checkEmail.name, auth: true, nick: checkEmail.nick}));
                 setState({pUser: true, pPass: true});
-                window.location = '/';}
+                dispatch(closeModal(false));
+                setReload(!reload);}
             else setState({pUser: true, pPass: false});
         } else setState({pUser: false, pPass: true});
     };
