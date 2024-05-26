@@ -10,7 +10,7 @@ export function ModalReducer(state = initialState, action) {
         case "SET_MODAL_UP":
             return {...state, modalUp: action.payload}
         case 'CLOSE_MODAL':
-            return {modalIn: action.payload, modalUp: action.payload}
+            return {modalIn: false, modalUp: false}
         
         default:
             return state

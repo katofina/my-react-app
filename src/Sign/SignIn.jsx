@@ -19,7 +19,7 @@ function SignIn({reload, setReload}) {
             if (checkEmail.pass === passRef.current.value) {
                 localStorage.setItem("authUser", JSON.stringify({name: checkEmail.name, auth: true, nick: checkEmail.nick}));
                 setState({pUser: true, pPass: true});
-                dispatch(closeModal(false));
+                dispatch(closeModal());
                 setReload(!reload);}
             else setState({pUser: true, pPass: false});
         } else setState({pUser: false, pPass: true});

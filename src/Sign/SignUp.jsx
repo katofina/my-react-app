@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { closeModal } from '../reducers/CloseModalAction';
 
-function SignUp() {
+function SignUp({reload, setReload}) {
     const [state, setState] = useState({nameBool:true, passBool:true, userBool:true, checkSame: false});
+
+    const dispatch = useDispatch();
 
     const userRef = useRef();
     const passRef = useRef();
@@ -22,7 +26,8 @@ function SignUp() {
             const usersString = users + JSON.stringify({name: name, nick: nick, pass: pass}) + ";";
             localStorage.setItem("users", usersString);
             localStorage.setItem("authUser", JSON.stringify({name: name, auth: true, nick: nick}));
-            window.location = '/';
+            dispatch(closeModal());
+            setReload(!reload);
         };
     };
 
