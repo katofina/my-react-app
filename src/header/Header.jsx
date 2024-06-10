@@ -28,8 +28,8 @@ function Header() {
                 <>
                 <div className='row'>
                     <p className='hello'>Hello, {auth.name}</p>
-                    <Link to="/history" className='buttonSign'>History</Link>
-                    <Link to="/favourite" className='buttonSign'>Favourite</Link>
+                    <button className='buttonSign' onClick={() => navigate('/history')}>History</button>
+                    <button className='buttonSign' onClick={() => navigate('/favourite')}>Favourite</button>
                     <button className='buttonSign' onClick={() => {
                         setAuth(false); localStorage.setItem("authUser", JSON.stringify({name: "", auth: false}));
                         navigate('/')}}>

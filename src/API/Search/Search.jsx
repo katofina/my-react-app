@@ -1,5 +1,5 @@
-import '../Search/Search.css';
-import ApiTest from "../ApiTest";
+import './Search.css';
+import '../ApiTest.css'
 import { Outlet, useNavigate } from "react-router-dom";
 
 function Search() {
@@ -15,10 +15,9 @@ function Search() {
         <>
         <div className="divSearch">
             <img src="/icons/searchIcon.svg" alt="Search" className="searchIco"/>
-                <input type="text" placeholder="Enter for search..." className="inputSearch" onKeyDown={searchRes}/>
+            <input type="text" placeholder="Enter for search..." className="inputSearch" onKeyDown={searchRes}/>
         </div>
         <Outlet/>
-        <ApiTest/>
         </>
     )
 }
