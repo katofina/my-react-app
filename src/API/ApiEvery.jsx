@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import NoFound from './Search/NoFound';
 import Every from "./Every";
 
 function ApiEvery() {
     const [resMap, setResMap] = useState([]);
+    const [isFound, setIsFound] = useState(true);
     const {res} = useParams();
-    const navigate = useNavigate();
 
     const fetchData = async () => {
         const response = await fetch('https://fakestoreapi.com/products/');
         const result = await response.json();
         const resInput = result.filter((item) => 
             item.title.toLowerCase().includes(res));
-        if(resInput == false) {navigate("/nofound");}
         setResMap(resInput);
+        if(resInput == false) setIsFound(false);
+        else setIsFound(true);
     };
 
     useEffect(() =>{
@@ -30,7 +31,15 @@ function ApiEvery() {
         }
     }, [res])
 
-    return (<Every arr={resMap}/>);
+    return (
+        <>
+            {isFound ? (
+                <Every arr={resMap}/>
+            ) : (
+                <NoFound/>
+            )}
+        </>
+    );
 }
 
 export default ApiEvery;

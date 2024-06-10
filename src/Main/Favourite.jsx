@@ -11,7 +11,6 @@ function Favourite() {
         if(checkAuth.auth === true) {
             const fav = JSON.parse(localStorage.getItem(checkAuth.nick));
             if(fav) setFavorite(fav);
-            console.log(favourite);
         } else navigate("/");
     }, []);
     

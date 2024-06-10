@@ -7,7 +7,8 @@ function Search() {
 
     function searchRes(event) {
         if(event.key === "Enter") {
-            navigate("/search/" + event.target.value);
+            if(event.target.value) navigate("/search/" + event.target.value);
+            else navigate("/nofound");
         }
     };
 
