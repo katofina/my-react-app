@@ -28,8 +28,8 @@ function Header() {
                 <>
                 <div className='row'>
                     <p className='hello'>Hello, {auth.name}</p>
-                    <button className='buttonSign' onClick={() => navigate('/history')}>History</button>
-                    <button className='buttonSign' onClick={() => navigate('/favourite')}>Favourite</button>
+                    <button className='buttonSign' onClick={() => navigate('/history')}><img src="/icons/history.svg" alt='gitIco'/>History</button>
+                    <button className='buttonSign' onClick={() => navigate('/favourite')}><img src="/icons/checkFav.svg" alt='gitIco'/>Favourite</button>
                     <button className='buttonSign' onClick={() => {
                         setAuth(false); localStorage.setItem("authUser", JSON.stringify({name: "", auth: false}));
                         navigate('/')}}>
@@ -38,9 +38,9 @@ function Header() {
                 </div>
                 </>
             ) : (
-                <div>
-                    <button className='buttonSign' onClick={() => dispatch(setModalIn(true))}>Sign In</button>
-                    <button className='buttonSign' onClick={() => dispatch(setModalUp(true))}>Sign Up</button>
+                <div className='row'>
+                    <button className='buttonSign buttonSign_width' onClick={() => dispatch(setModalIn(true))}>Sign In</button>
+                    <button className='buttonSign buttonSign_width' onClick={() => dispatch(setModalUp(true))}>Sign Up</button>
                 </div>
             )}
             <Modal active={modal.modalIn}><SignIn reload={reload} setReload={setReload}/></Modal>

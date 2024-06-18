@@ -27,6 +27,9 @@ function SignUp({reload, setReload}) {
             localStorage.setItem("users", usersString);
             localStorage.setItem("authUser", JSON.stringify({name: name, auth: true, nick: nick}));
             dispatch(closeModal());
+            userRef.current.value = "";
+            passRef.current.value = "";
+            nameRef.current.value = "";
             setReload(!reload);
         };
     };
@@ -50,7 +53,7 @@ function SignUp({reload, setReload}) {
                         {state.passBool ? null : ("String must have at least one number and 6-16 charachters")}
                     </p>
                 </div>
-                <button className='buttonSign'>Sign Up</button>
+                <button className='buttonSign buttonSign_width'>Sign Up</button>
             </form>
         </div>
     )

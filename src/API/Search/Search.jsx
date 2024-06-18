@@ -9,6 +9,7 @@ function Search() {
         if(event.key === "Enter") {
             if(event.target.value) navigate("/search/" + event.target.value);
             else navigate("/nofound");
+            
         }
     };
 

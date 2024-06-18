@@ -20,6 +20,8 @@ function SignIn({reload, setReload}) {
                 localStorage.setItem("authUser", JSON.stringify({name: checkEmail.name, auth: true, nick: checkEmail.nick}));
                 setState({pUser: true, pPass: true});
                 dispatch(closeModal());
+                userRef.current.value = "";
+                passRef.current.value = "";
                 setReload(!reload);}
             else setState({pUser: true, pPass: false});
         } else setState({pUser: false, pPass: true});
@@ -39,7 +41,7 @@ function SignIn({reload, setReload}) {
                         {state.pPass ? null : ("The password is incorrect.")}
                     </p>
                 </div>
-                <button className='buttonSign'>Sign In</button>
+                <button className='buttonSign buttonSign_width'>Sign In</button>
             </form>
         </div>
     )

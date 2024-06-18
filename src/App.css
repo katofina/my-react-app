@@ -1,7 +1,7 @@
 header {
     position: fixed;
     width: 100%;
-    background-color: antiquewhite;
+    background-color: rgb(192, 191, 190);
     z-index: 3;
     top: 0;
     box-shadow: 0px -5px 5px -5px rgba(34, 60, 80, 0.6) inset;
