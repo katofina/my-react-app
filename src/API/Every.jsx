@@ -2,10 +2,13 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setModalIn } from "../reducers/ModalAction";
 import { useNavigate, useParams } from "react-router-dom";
+import { Alert } from "@mui/material";
+import CheckIcon from '@mui/icons-material/Check';
 
 function Every(props) {
     const [auth, setAuth] = useState({});
-    const [reload, setReload] = useState(false);
+    const [isRemove, setIsRemove] = useState(false);
+    const [isAdd, setIsAdd] = useState(false);
     const dispatch = useDispatch();
     const {res} = useParams();
     const navigate = useNavigate();
@@ -13,7 +16,7 @@ function Every(props) {
     useEffect(() => {
         const checkAuth = JSON.parse(localStorage.getItem("authUser"));
         setAuth(checkAuth);
-    }, [reload])
+    }, [])
 
     function checkLogin(add) {
         if(auth.auth === false) {dispatch(setModalIn(true));}
@@ -25,6 +28,8 @@ function Every(props) {
                 if(checkOne === false) favourite = favourite.concat(add);
             } else {favourite = [add];};
             localStorage.setItem(auth.nick, JSON.stringify(favourite));
+            setIsAdd(true);
+            setTimeout(() => setIsAdd(false), 3000);
         }
     };
     
@@ -33,7 +38,8 @@ function Every(props) {
         const indexOne = favourite.findIndex((item) => item.id === rem.id);
         favourite.splice(indexOne, 1);
         localStorage.setItem(auth.nick, JSON.stringify(favourite));
-        setReload(!reload);
+        setIsRemove(true);
+        setTimeout(() => setIsRemove(false), 3000);
     };
 
     return (<div>
@@ -60,6 +66,14 @@ function Every(props) {
             </div>
         ))}
         </ul>
+        <div className="alert">
+            {isAdd ? (<Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+                Add to favourite.
+            </Alert>) : null}
+            {isRemove ? (<Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+                Remove from favourite.
+            </Alert>) : null}
+        </div>
     </div>)
 }
 
