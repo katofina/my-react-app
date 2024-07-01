@@ -1,28 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NoFound from './Search/NoFound';
 import Every from "./Every";
+import {useQuery} from 'react-query';
 
 function ApiEvery() {
-    const [resMap, setResMap] = useState([]);
-    const [isFound, setIsFound] = useState(true);
     const {res} = useParams();
+    const { isLoading, error, data } = useQuery(
+        'cards',
+        () => fetch(`https://fakestoreapi.com/products/`)
+        .then((res) => res.json())
+    );
+    let dataFilter;
 
-    const fetchData = async () => {
-        const response = await fetch('https://fakestoreapi.com/products/');
-        const result = await response.json();
-        const resInput = result.filter((item) => 
-            item.title.toLowerCase().includes(res));
-        setResMap(resInput);
-        if(resInput == false) setIsFound(false);
-        else setIsFound(true);
-    };
+    if(data) {dataFilter = data.filter((item) => item.title.toLowerCase().includes(res));};
 
     useEffect(() =>{
-        fetchData();
         const nick = JSON.parse(localStorage.getItem("authUser")).nick + "_hist";
         let hist = localStorage.getItem(nick);
-        if(hist) {
+        if (hist) {
             hist = JSON.parse(hist);
             if(!hist.includes(res)) {hist.push(res)};
             localStorage.setItem(nick, JSON.stringify(hist));
@@ -31,11 +27,14 @@ function ApiEvery() {
         }
     }, [res])
 
+    if (isLoading) return (<p>Loading...</p>)
+    if (error) return (<p>Error: {error.message}</p>)
+
     return (
         <>
-            {isFound ? (
-                <Every arr={resMap}/>
-            ) : (
+            {dataFilter.length? (
+                <Every arr={dataFilter}/>
+                    ) : (
                 <NoFound/>
             )}
         </>
