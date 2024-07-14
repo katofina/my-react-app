@@ -20,10 +20,20 @@ function SignUp({reload, setReload}) {
         const passBool = (/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,16}$/).test(pass);
         const userBool = (/^[^0-9]\w+$/).test(nick);
         const users = localStorage.getItem("users");
-        const checkSame = users.includes(nick);
+        let checkSame;
+        if (users) {
+            checkSame = users.includes(nick);
+        } else {
+            checkSame = false;
+        }
         setState({nameBool, passBool, userBool, checkSame});
         if (nameBool && passBool && userBool && (!checkSame)) {
-            const usersString = users + JSON.stringify({name: name, nick: nick, pass: pass}) + ";";
+            let usersString;
+            if(users) {
+                usersString = users + JSON.stringify({name: name, nick: nick, pass: pass}) + ";";
+            } else {
+                usersString = JSON.stringify({name: name, nick: nick, pass: pass}) + ";";
+            }
             localStorage.setItem("users", usersString);
             localStorage.setItem("authUser", JSON.stringify({name: name, auth: true, nick: nick}));
             dispatch(closeModal());

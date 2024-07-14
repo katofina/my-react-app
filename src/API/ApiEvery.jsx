@@ -16,14 +16,17 @@ function ApiEvery() {
     if(data) {dataFilter = data.filter((item) => item.title.toLowerCase().includes(res));};
 
     useEffect(() =>{
-        const nick = JSON.parse(localStorage.getItem("authUser")).nick + "_hist";
-        let hist = localStorage.getItem(nick);
-        if (hist) {
-            hist = JSON.parse(hist);
-            if(!hist.includes(res)) {hist.push(res)};
-            localStorage.setItem(nick, JSON.stringify(hist));
-        } else {
-            localStorage.setItem(nick, JSON.stringify([res]));
+        const authUser = JSON.parse(localStorage.getItem("authUser"));
+        if (authUser) {
+            const nick = authUser.nick + '_hist'
+            let hist = localStorage.getItem(nick);
+            if (hist) {
+                hist = JSON.parse(hist);
+                if(!hist.includes(res)) {hist.push(res)};
+                localStorage.setItem(nick, JSON.stringify(hist));
+            } else {
+                localStorage.setItem(nick, JSON.stringify([res]));
+            }
         }
     }, [res])
 

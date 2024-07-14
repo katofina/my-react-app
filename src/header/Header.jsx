@@ -18,7 +18,9 @@ function Header() {
 
     useEffect(() => {
         const checkLocal = JSON.parse(localStorage.getItem("authUser"));
-        if(checkLocal.auth === true) {setAuth({auth: checkLocal.auth, name: checkLocal.name});}
+        if (checkLocal) {
+            if(checkLocal.auth === true) {setAuth({auth: checkLocal.auth, name: checkLocal.name});}
+        }
     }, [reload]);
 
     return (
